@@ -1,6 +1,7 @@
 package com.example.wantedpreonboardingbackend.domain;
 
-import com.example.wantedpreonboardingbackend.dto.EmploymentDto;
+import com.example.wantedpreonboardingbackend.dto.EmploymentCreateDto;
+import com.example.wantedpreonboardingbackend.dto.EmploymentUpdateDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,11 +34,18 @@ public class Employment {
         this.skill = skill;
     }
 
-    public void mapDtoToEntity(EmploymentDto employmentDto, Company company) {
+    public void mapCreateDtoToEntity(EmploymentCreateDto employmentCreateDto, Company company) {
         this.company = company;
-        this.position = employmentDto.getPosition();
-        this.money = employmentDto.getMoney();
-        this.content = employmentDto.getContent();
-        this.skill = employmentDto.getSkill();
+        this.position = employmentCreateDto.getPosition();
+        this.money = employmentCreateDto.getMoney();
+        this.content = employmentCreateDto.getContent();
+        this.skill = employmentCreateDto.getSkill();
+    }
+
+    public void mapUpdateDtoToEntity(EmploymentUpdateDto employmentUpdateDto) {
+        this.position = employmentUpdateDto.getPosition();
+        this.money = employmentUpdateDto.getMoney();
+        this.content = employmentUpdateDto.getContent();
+        this.skill = employmentUpdateDto.getSkill();
     }
 }

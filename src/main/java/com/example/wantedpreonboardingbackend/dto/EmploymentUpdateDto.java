@@ -6,10 +6,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Getter
-public class EmploymentDto {
-
-    @NotNull
-    private Long companyId;
+public class EmploymentUpdateDto {
 
     @NotEmpty
     private String position;
