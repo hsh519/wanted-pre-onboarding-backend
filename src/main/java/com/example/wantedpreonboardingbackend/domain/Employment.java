@@ -1,5 +1,6 @@
 package com.example.wantedpreonboardingbackend.domain;
 
+import com.example.wantedpreonboardingbackend.dto.EmploymentDto;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -27,5 +28,13 @@ public class Employment {
         this.money = money;
         this.content = content;
         this.skill = skill;
+    }
+
+    public void mapDtoToEntity(EmploymentDto employmentDto, Company company) {
+        this.company = company;
+        this.position = employmentDto.getPosition();
+        this.money = employmentDto.getMoney();
+        this.content = employmentDto.getContent();
+        this.skill = employmentDto.getSkill();
     }
 }
