@@ -1,11 +1,14 @@
 package com.example.wantedpreonboardingbackend.domain;
 
 import com.example.wantedpreonboardingbackend.dto.EmploymentDto;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
+@Getter @Setter
 @NoArgsConstructor
 public class Employment {
 
