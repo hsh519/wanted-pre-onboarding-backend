@@ -1,15 +1,13 @@
 package com.example.wantedpreonboardingbackend.controller;
 
 import com.example.wantedpreonboardingbackend.dto.EmploymentCreateDto;
-import com.example.wantedpreonboardingbackend.dto.EmploymentReadDto;
+import com.example.wantedpreonboardingbackend.dto.EmploymentReadListDto;
 import com.example.wantedpreonboardingbackend.dto.EmploymentUpdateDto;
 import com.example.wantedpreonboardingbackend.service.EmploymentService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -47,7 +45,7 @@ public class EmploymentController {
     }
 
     @GetMapping("/employment/list")
-    public List<EmploymentReadDto> getList(@RequestParam(name = "search", defaultValue = "") String searchKeyword) {
+    public List<EmploymentReadListDto> getList(@RequestParam(name = "search", defaultValue = "") String searchKeyword) {
         return employmentService.readEmploymentList(searchKeyword);
     }
 }

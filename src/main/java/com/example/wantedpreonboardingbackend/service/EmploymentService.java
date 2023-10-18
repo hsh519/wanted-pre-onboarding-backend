@@ -3,7 +3,7 @@ package com.example.wantedpreonboardingbackend.service;
 import com.example.wantedpreonboardingbackend.domain.Company;
 import com.example.wantedpreonboardingbackend.domain.Employment;
 import com.example.wantedpreonboardingbackend.dto.EmploymentCreateDto;
-import com.example.wantedpreonboardingbackend.dto.EmploymentReadDto;
+import com.example.wantedpreonboardingbackend.dto.EmploymentReadListDto;
 import com.example.wantedpreonboardingbackend.dto.EmploymentUpdateDto;
 import com.example.wantedpreonboardingbackend.repository.CompanyRepository;
 import com.example.wantedpreonboardingbackend.repository.EmploymentRepository;
@@ -49,7 +49,7 @@ public class EmploymentService {
         employmentRepository.deleteById(employmentId);
     }
 
-    public List<EmploymentReadDto> readEmploymentList(String searchKeyword) {
+    public List<EmploymentReadListDto> readEmploymentList(String searchKeyword) {
         if (searchKeyword.isEmpty()) {
             return employmentRepository.findAllEmployment();
         }
