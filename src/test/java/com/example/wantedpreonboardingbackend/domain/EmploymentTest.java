@@ -1,5 +1,6 @@
 package com.example.wantedpreonboardingbackend.domain;
 
+import com.example.wantedpreonboardingbackend.dto.EmploymentReadDto;
 import com.example.wantedpreonboardingbackend.repository.CompanyRepository;
 import com.example.wantedpreonboardingbackend.repository.EmploymentRepository;
 import org.assertj.core.api.Assertions;
@@ -85,8 +86,8 @@ class EmploymentTest {
 
     @Test
     void 채용공고_검색() {
-        List<Employment> list1 = employmentRepository.findByKeyword("원티드");
-        List<Employment> list2 = employmentRepository.findByKeyword("Java");
+        List<EmploymentReadDto> list1 = employmentRepository.findByKeyword("원티드");
+        List<EmploymentReadDto> list2 = employmentRepository.findByKeyword("Java");
 
         Assertions.assertThat(list1.size()).isEqualTo(2);
         Assertions.assertThat(list2.size()).isEqualTo(2);

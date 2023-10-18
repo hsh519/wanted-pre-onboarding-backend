@@ -1,7 +1,9 @@
 package com.example.wantedpreonboardingbackend.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
 @AllArgsConstructor
 public class EmploymentReadDto {
 
