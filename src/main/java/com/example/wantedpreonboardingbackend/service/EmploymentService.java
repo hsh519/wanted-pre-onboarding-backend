@@ -1,13 +1,14 @@
 package com.example.wantedpreonboardingbackend.service;
 
+import com.example.wantedpreonboardingbackend.domain.Apply;
 import com.example.wantedpreonboardingbackend.domain.Company;
 import com.example.wantedpreonboardingbackend.domain.Employment;
-import com.example.wantedpreonboardingbackend.dto.EmploymentCreateDto;
-import com.example.wantedpreonboardingbackend.dto.EmploymentReadListDto;
-import com.example.wantedpreonboardingbackend.dto.EmploymentReadOneDto;
-import com.example.wantedpreonboardingbackend.dto.EmploymentUpdateDto;
+import com.example.wantedpreonboardingbackend.domain.Member;
+import com.example.wantedpreonboardingbackend.dto.*;
+import com.example.wantedpreonboardingbackend.repository.ApplyRepository;
 import com.example.wantedpreonboardingbackend.repository.CompanyRepository;
 import com.example.wantedpreonboardingbackend.repository.EmploymentRepository;
+import com.example.wantedpreonboardingbackend.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,8 @@ public class EmploymentService {
 
     private final EmploymentRepository employmentRepository;
     private final CompanyRepository companyRepository;
+    private final ApplyRepository applyRepository;
+    private final MemberRepository memberRepository;
 
     @Transactional
     public void postEmployment(EmploymentCreateDto employmentCreateDto) {
@@ -70,5 +73,38 @@ public class EmploymentService {
         // dto에 리스트를 저장하고 반환한다
         employment.addOtherEmploymentList(otherEmploymentId);
         return employment;
+    }
+
+    @Transactional
+    public String applyEmployment(ApplyDto applyDto) {
+        Apply apply = new Apply();
+        // 채용공고 id로 채용공고를, 사용자 id로 사용자를 찾습니다.
+        Optional<Employment> employmentOptional = employmentRepository.findById(applyDto.getEmploymentId());
+        Optional<Member> memberOptional = memberRepository.findById(applyDto.getMemberId());
+
+        // 사용자가 존재하는지 확인
+        if (memberOptional.isEmpty()) {
+            return "없는 사용자 id 입니다.";
+        }
+
+        // 처음 지원하는 사용자인지 확인
+        Member member = memberOptional.get();
+        if(member.getApply() != null) {
+            return "이미 1회 지원한 사용자입니다.";
+        }
+
+        // 처음 지원하고 채용공고도 존재한다면
+        if (employmentOptional.isPresent()) {
+
+            // 지원내역 저장
+            Employment employment = employmentOptional.get();
+            apply.setEmployment(employment);
+            applyRepository.save(apply);
+
+            // 사용자가 지원한 회사도 수정
+            member.setApply(apply);
+            return "지원 완료";
+        }
+        return "없는 채용공고 id 입니다.";
     }
 }

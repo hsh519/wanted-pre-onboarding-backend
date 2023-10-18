@@ -1,9 +1,6 @@
 package com.example.wantedpreonboardingbackend.controller;
 
-import com.example.wantedpreonboardingbackend.dto.EmploymentCreateDto;
-import com.example.wantedpreonboardingbackend.dto.EmploymentReadListDto;
-import com.example.wantedpreonboardingbackend.dto.EmploymentReadOneDto;
-import com.example.wantedpreonboardingbackend.dto.EmploymentUpdateDto;
+import com.example.wantedpreonboardingbackend.dto.*;
 import com.example.wantedpreonboardingbackend.service.EmploymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;
@@ -53,5 +50,13 @@ public class EmploymentController {
     @GetMapping("/employment/{employmentId}")
     public EmploymentReadOneDto getOne(@PathVariable Long employmentId) {
         return employmentService.readEmploymentOne(employmentId);
+    }
+
+    @PostMapping("/employment/apply")
+    public String apply(@RequestBody ApplyDto applyDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "채용공고 id 혹은 사용자 id가 누락되었습니다.";
+        }
+        return employmentService.applyEmployment(applyDto);
     }
 }
