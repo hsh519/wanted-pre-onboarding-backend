@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class EmploymentReadDto {
+public class EmploymentReadListDto {
 
     private Long id;
     private String companyName;
