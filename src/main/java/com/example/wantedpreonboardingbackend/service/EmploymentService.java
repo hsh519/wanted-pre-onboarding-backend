@@ -3,6 +3,7 @@ package com.example.wantedpreonboardingbackend.service;
 import com.example.wantedpreonboardingbackend.domain.Company;
 import com.example.wantedpreonboardingbackend.domain.Employment;
 import com.example.wantedpreonboardingbackend.dto.EmploymentCreateDto;
+import com.example.wantedpreonboardingbackend.dto.EmploymentReadDto;
 import com.example.wantedpreonboardingbackend.dto.EmploymentUpdateDto;
 import com.example.wantedpreonboardingbackend.repository.CompanyRepository;
 import com.example.wantedpreonboardingbackend.repository.EmploymentRepository;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,6 +21,7 @@ public class EmploymentService {
     private final EmploymentRepository employmentRepository;
     private final CompanyRepository companyRepository;
 
+    @Transactional
     public void postEmployment(EmploymentCreateDto employmentCreateDto) {
         Optional<Company> companyOptional = companyRepository.findById(employmentCreateDto.getCompanyId());
 
@@ -39,5 +42,17 @@ public class EmploymentService {
             Employment employment = employmentOptional.get();
             employment.mapUpdateDtoToEntity(employmentUpdateDto);
         }
+    }
+
+    @Transactional
+    public void deleteEmployment(Long employmentId) {
+        employmentRepository.deleteById(employmentId);
+    }
+
+    public List<EmploymentReadDto> readEmploymentList(String searchKeyword) {
+        if (searchKeyword.isEmpty()) {
+            return employmentRepository.findAllEmployment();
+        }
+        return employmentRepository.findByKeyword(searchKeyword);
     }
 }

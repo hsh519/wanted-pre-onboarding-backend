@@ -1,14 +1,16 @@
 package com.example.wantedpreonboardingbackend.controller;
 
 import com.example.wantedpreonboardingbackend.dto.EmploymentCreateDto;
+import com.example.wantedpreonboardingbackend.dto.EmploymentReadDto;
 import com.example.wantedpreonboardingbackend.dto.EmploymentUpdateDto;
 import com.example.wantedpreonboardingbackend.service.EmploymentService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,5 +38,16 @@ public class EmploymentController {
 
         employmentService.updateEmployment(employmentId, employmentUpdateDto);
         return "채용공고 수정 성공";
+    }
+
+    @DeleteMapping("/employment/delete/{employmentId}")
+    public String delete(@PathVariable Long employmentId) {
+        employmentService.deleteEmployment(employmentId);
+        return "삭제 완료";
+    }
+
+    @GetMapping("/employment/list")
+    public List<EmploymentReadDto> getList(@RequestParam(name = "search", defaultValue = "") String searchKeyword) {
+        return employmentService.readEmploymentList(searchKeyword);
     }
 }
