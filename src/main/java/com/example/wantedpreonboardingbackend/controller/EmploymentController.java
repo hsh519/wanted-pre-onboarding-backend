@@ -2,6 +2,7 @@ package com.example.wantedpreonboardingbackend.controller;
 
 import com.example.wantedpreonboardingbackend.dto.EmploymentCreateDto;
 import com.example.wantedpreonboardingbackend.dto.EmploymentReadListDto;
+import com.example.wantedpreonboardingbackend.dto.EmploymentReadOneDto;
 import com.example.wantedpreonboardingbackend.dto.EmploymentUpdateDto;
 import com.example.wantedpreonboardingbackend.service.EmploymentService;
 import lombok.RequiredArgsConstructor;
@@ -47,5 +48,10 @@ public class EmploymentController {
     @GetMapping("/employment/list")
     public List<EmploymentReadListDto> getList(@RequestParam(name = "search", defaultValue = "") String searchKeyword) {
         return employmentService.readEmploymentList(searchKeyword);
+    }
+
+    @GetMapping("/employment/{employmentId}")
+    public EmploymentReadOneDto getOne(@PathVariable Long employmentId) {
+        return employmentService.readEmploymentOne(employmentId);
     }
 }

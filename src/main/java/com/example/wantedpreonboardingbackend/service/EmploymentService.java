@@ -4,6 +4,7 @@ import com.example.wantedpreonboardingbackend.domain.Company;
 import com.example.wantedpreonboardingbackend.domain.Employment;
 import com.example.wantedpreonboardingbackend.dto.EmploymentCreateDto;
 import com.example.wantedpreonboardingbackend.dto.EmploymentReadListDto;
+import com.example.wantedpreonboardingbackend.dto.EmploymentReadOneDto;
 import com.example.wantedpreonboardingbackend.dto.EmploymentUpdateDto;
 import com.example.wantedpreonboardingbackend.repository.CompanyRepository;
 import com.example.wantedpreonboardingbackend.repository.EmploymentRepository;
@@ -54,5 +55,20 @@ public class EmploymentService {
             return employmentRepository.findAllEmployment();
         }
         return employmentRepository.findByKeyword(searchKeyword);
+    }
+
+    public EmploymentReadOneDto readEmploymentOne(Long employmentId) {
+        // 회사가 올린 다른 채용공고를 제외한 나머지 데이터를 dto로 생성해 가져온다
+        EmploymentReadOneDto employment = employmentRepository.findOne(employmentId);
+
+        // 해당 채용공고의 회사 id를 찾고
+        Long companyId = employmentRepository.findCompanyIdByEmploymentId(employmentId);
+
+        // 찾은 회사 id와 해당 채용공고 id로 회사가 올린 다른 채용공고 id를 리스트로 가져온다
+        List<Long> otherEmploymentId = employmentRepository.findOtherEmploymentId(companyId, employmentId);
+
+        // dto에 리스트를 저장하고 반환한다
+        employment.addOtherEmploymentList(otherEmploymentId);
+        return employment;
     }
 }
